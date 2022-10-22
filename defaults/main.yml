@@ -1,0 +1,24 @@
+---
+# defaults file for ch0ww-doomservers
+doom_user: "doomuser"
+doom_main_directory: /home/{{ doom_install_user }}/doom
+
+# WAD Directory settings
+doom_waddir_create: true
+doom_waddir: "{{ doom_main_directory }}/wads"
+
+# ZDaemon specific settings
+doom_zdaemon_install: true
+doom_zdaemon_install_directory: "{{ doom_main_directory }}/zdaemon"
+doom_zdaemon_latest_version: "zserv11022_linux26.tgz"
+doom_zdaemon_extractdir: "zserv110_bin"
+
+# Zandronum specific settings
+doom_zandronum_install: true
+doom_zandronum_install_directory: "{{ doom_main_directory }}/zandronum"
+doom_zandronum_release: "3.1"
+
+# Odamex specific settings
+doom_odamex_install: true
+doom_odamex_install_directory: "{{ doom_main_directory }}/odamex"
+

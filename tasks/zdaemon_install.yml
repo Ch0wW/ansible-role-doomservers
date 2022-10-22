@@ -1,0 +1,57 @@
+---
+# tasks file for ZDaemon installation procedure
+
+- name: "Download Zdaemon's latest release"
+  ansible.builtin.get_url:
+    url: "https://downloads.zdaemon.org//{{ doom_zdaemon_latest_version }}"
+    dest: "/tmp"
+    mode: "0750"
+
+- name: "Extract ZDaemon to /tmp"
+  ansible.builtin.unarchive:
+    src: "/tmp/{{ doom_zdaemon_latest_version }}"
+    dest: "/tmp"
+    remote_src: true
+
+- name: "Create Zdaemon sub-folder"
+  ansible.builtin.file:
+    path: "{{ doom_install_zdaemon_directory }}"
+    state: directory
+    mode: "0750"
+    owner: "{{ doom_install_user }}"
+
+- name: "Find all files to ZDaemon directory"
+  ansible.builtin.find:
+    paths:
+      - /tmp/zserv110_bin/
+    recurse: false
+  register: zserv_files
+
+- name: "Copy all files"
+  ansible.builtin.copy:
+    src: "{{ item.path }}"
+    dest: "{{ doom_install_zdaemon_directory }}"
+    mode: "0750"
+    owner: "{{ doom_install_user }}"
+    remote_src: true
+  loop: "{{ zserv_files.files }}"
+
+# Add required libraries depending on the OS
+- name: "Add Required i386 libraries (Ubuntu/Debian)"
+  when: (ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu')
+  become: true
+  block:
+    - name: "Add dpkg architecture for 32bits libraries (required for ZDaemon)"
+      ansible.builtin.command: 
+        cmd: "dpkg --add-architecture i386"
+      register: install_output
+      changed_when: install_output.rc != 0
+
+    - name: "Update and install packages"
+      ansible.builtin.apt:
+        update_cache: true
+        pkg:
+          - libc6-i386
+          - libstdc++6:i386
+
+  # ToDo: Add the server template

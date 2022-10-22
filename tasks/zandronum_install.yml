@@ -1,0 +1,21 @@
+---
+- name: "Make sure all of Zandronum's prerequisites are set"
+
+- name: "Download Zandronum's latest release"
+  ansible.builtin.get_url:
+    url: "https://zandronum.com/downloads/zandronum{{ doom_zandronum_release }}-linux-x86_64.tar.bz2"
+    dest: "/tmp"
+    mode: "0750"
+
+- name: "Create Zandronum's sub-folder"
+  ansible.builtin.file:
+    path: "{{ doom_zandronum_install_directory }}"
+    state: directory
+    mode: "0750"
+    owner: "{{ doom_install_user }}"
+
+- name: "Extract Zandronum to {{ doom_zandronum_install_directory }}"
+  ansible.builtin.unarchive:
+    src: "/tmp/zandronum{{ doom_zandronum_release }}-linux-x86_64.tar.bz2"
+    dest: "{{ doom_zandronum_install_directory }}"
+    remote_src: true

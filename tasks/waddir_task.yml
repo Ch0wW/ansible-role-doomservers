@@ -1,0 +1,9 @@
+---
+# tasks file for ch0ww-doomservers
+
+- name: "Create Wad Directory"
+  ansible.builtin.file:
+    path: "{{ doom_waddir }}"
+    state: directory
+    mode: "0750"
+    owner: "{{ doom_install_user }}"

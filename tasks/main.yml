@@ -1,0 +1,14 @@
+---
+# tasks file for ch0ww-doomservers
+
+# Install Wad Directory task
+- ansible.builtin.include_tasks: waddir_task.yml
+  when: doom_waddir_create
+
+# Install Zdaemon task
+- ansible.builtin.include_tasks: zdaemon_install.yml
+  when: doom_zdaemon_install
+
+# Install Zandronum task
+- ansible.builtin.include_tasks: zandronum_install.yml
+  when: doom_zandronum_install
