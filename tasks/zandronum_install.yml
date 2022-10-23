@@ -1,4 +1,12 @@
 ---
+
+- name: "Make sure all of Zandronum's prerequisites are there"
+  become: true
+  ansible.builtin.apt:
+    update_cache: true
+    pkg:
+      - libsdl1.2-dev
+
 - name: "Download Zandronum's latest release"
   ansible.builtin.get_url:
     url: "https://zandronum.com/downloads/zandronum{{ doom_zandronum_release }}-linux-x86_64.tar.bz2"
