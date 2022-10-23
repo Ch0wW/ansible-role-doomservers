@@ -40,7 +40,7 @@
         ansible.builtin.unarchive:
           src: "https://github.com/odamex/odamex/releases/download/{{ odamex_latest['tag'] }}/odamex-src-{{ odamex_latest['tag'] }}.tar.gz"
           dest: "/tmp/odamex/src"
-        remote_src: true
+          remote_src: true
 
       - name: "Creating the CMake command"
         ansible.builtin.command:
