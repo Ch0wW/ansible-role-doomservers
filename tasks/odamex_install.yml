@@ -1,19 +1,21 @@
 ---
 - name: "Make sure all of Odamex's prerequisites are there"
   become: true
-  ansible.builtin.apt:
-    update_cache: true
-    pkg:
-      - ninja-build
-      - libsdl2-dev
-      - libsdl2-mixer-dev
-      - build-essential
-      - deutex
-      - python3-pip
+  block:
+  - name: "Make sure all of Odamex's prerequisites are there"
+    ansible.builtin.apt:
+      update_cache: true
+      pkg:
+        - ninja-build
+        - libsdl2-dev
+        - libsdl2-mixer-dev
+        - build-essential
+        - deutex
+        - python3-pip
 
-- name: "Make sure github3.py is installed"
-  ansible.builtin.pip:
-    name: github3.py
+  - name: "Make sure github3.py is installed"
+    ansible.builtin.pip:
+      name: github3.py
 
 - name: "Download the source..."
   become: true
@@ -79,3 +81,12 @@
         loop:
           - "/tmp/odamex/build/server/odamex.wad"
           - "/tmp/odamex/build/server/odasrv"
+
+        # Add the server template
+      - name: "Create the Odamex server template"
+        ansible.builtin.template:
+          src: "odamex_server_template.j2"
+          dest: "{{ doom_odamex_install_directory }}/template.sh"
+          owner: "{{ doom_user }}"
+          group: "{{ doom_user }}"
+          mode: "0700"

@@ -25,3 +25,12 @@
     src: "/tmp/zandronum{{ doom_zandronum_release }}-linux-x86_64.tar.bz2"
     dest: "{{ doom_zandronum_install_directory }}"
     remote_src: true
+
+  # Add the server template
+- name: "Create the Zandronum template script"
+  ansible.builtin.template:
+    src: "zandronum_server_template.j2"
+    dest: "{{ doom_zandronum_install_directory }}/template.sh"
+    owner: "{{ doom_user }}"
+    group: "{{ doom_user }}"
+    mode: "0700"

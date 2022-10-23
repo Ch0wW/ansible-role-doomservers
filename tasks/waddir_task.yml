@@ -7,3 +7,14 @@
     state: directory
     mode: "0750"
     owner: "{{ doom_user }}"
+
+- name: "Set environment variable"
+  lineinfile:
+    path: "{{ doom_user }}/.bashrc"
+    line: export DOOMWADDIR={{ doom_waddir }}
+
+- name: "Make sure variable is set..."
+  shell: . {{ doom_user }}/.bashrc && echo $DOOMWADDIR
+  register: doomwaddirpathenv
+
+- debug: var=doomwaddirpathenv
