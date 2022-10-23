@@ -12,3 +12,7 @@
 # Install Zandronum task
 - ansible.builtin.include_tasks: zandronum_install.yml
   when: doom_zandronum_install
+
+# Install Odamex task
+- ansible.builtin.include_tasks: odamex_install.yml
+  when: doom_odamex_install

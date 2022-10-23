@@ -1,0 +1,81 @@
+---
+- name: "Make sure all of Odamex's prerequisites are there"
+  become: true
+  ansible.builtin.apt:
+    update_cache: true
+    pkg:
+      - ninja-build
+      - libsdl2-dev
+      - libsdl2-mixer-dev
+      - build-essential
+      - deutex
+      - python3-pip
+
+- name: "Make sure github3.py is installed"
+  ansible.builtin.pip:
+    name: github3.py
+
+- name: "Download the source..."
+  become: true
+  become_user: "{{ doom_user }}"
+  block:
+      - name: "Get Odamex's latest tag"
+        community.general.github_release:
+          user: odamex
+          repo: odamex
+          action: latest_release
+        register: odamex_latest
+
+      - name: Create folders in /tmp for the compilation purposes...
+        ansible.builtin.file:
+          path: "{{ item }}"
+          state: directory
+          mode: "0750"
+          owner: "{{ doom_user }}"
+        loop:
+          - "/tmp/odamex/src"
+          - "/tmp/odamex/build"
+
+      - name: "Grab Odamex's latest sourcecode"
+        ansible.builtin.unarchive:
+          src: "https://github.com/odamex/odamex/releases/download/{{ odamex_latest['tag'] }}/odamex-src-{{ odamex_latest['tag'] }}.tar.gz"
+          dest: "/tmp/odamex/src"
+        remote_src: true
+
+      - name: "Creating the CMake command"
+        ansible.builtin.command:
+          chdir: "/tmp/odamex/build"
+          argv:
+            - "cmake"
+            - "../src/odamex-src-{{ odamex_latest['tag'] }}"
+            - "-GNinja"
+            - "-DCMAKE_BUILD_TYPE=Release"
+            - "-DBUILD_OR_FAIL=1"
+            - "-DBUILD_CLIENT=0"
+            - "-DBUILD_SERVER=1"
+            - "-DBUILD_MASTER=0"
+            - "-DBUILD_LAUNCHER=0"
+        register: odamex_cmakeoutput
+        changed_when: odamex_cmakeoutput.rc != 0
+
+      - name: "Make Odamex"
+        community.general.make:
+          chdir: "/tmp/odamex/build"
+          make: "ninja"
+
+      - name: Create Odamex folder...
+        ansible.builtin.file:
+          path: "{{ doom_odamex_install_directory }}"
+          state: directory
+          mode: "0750"
+          owner: "{{ doom_user }}"
+
+      - name: "Copy all required files to Odamex folder"
+        ansible.builtin.copy:
+          src: "{{ item }}"
+          dest: "{{ doom_odamex_install_directory }}"
+          mode: "0750"
+          remote_src: true
+        loop:
+          - "/tmp/odamex/build/server/odamex.wad"
+          - "/tmp/odamex/build/server/odasrv"

@@ -3,6 +3,7 @@ Role Name
 
 This role sets up an environment for Doom's multiplayer ports, such as [Zdaemon](https://zdaemon.org), [Zandronum](https://zandronum.com), and [Odamex](https://odamex.net) in a Linux environment. 
 
+**By default, all installations are disabled! You'll have to manually set the variables. See the examples below.**
 
 Requirements
 ------------
@@ -33,7 +34,7 @@ doom_waddir_create: true
 doom_waddir: "{{ doom_main_directory }}/wads"
 ```
 
-This is the directory that will be used for searching all the WADs for the ports. Set `doom_waddir_create` to `false` if you do not want this feature.
+This is the directory that will be created & used for searching all the WADs for the ports. Set `doom_waddir_create` to `false` if you do not want this feature.
 
 ```
 doom_zdaemon_install: false
@@ -82,12 +83,18 @@ Example Playbook
 
 **THIS IS NOT DONE YET...** So expect the default data created...
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+This example will install *the wads directory and zdaemon*. Zandronum and Odamex will not be installed.
 
 ```
     - hosts: servers
       roles:
-         - { role: ch0ww.doomservers, doom: 42 }
+         - role: ch0ww.doomservers
+
+      vars:
+        - doom_waddir_create: true
+        - doom_zdaemon_install: true
+        - doom_zandronum_install: false
+        - doom_odamex_install: false
 ```
 
 License

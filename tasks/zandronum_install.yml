@@ -1,6 +1,4 @@
 ---
-- name: "Make sure all of Zandronum's prerequisites are set"
-
 - name: "Download Zandronum's latest release"
   ansible.builtin.get_url:
     url: "https://zandronum.com/downloads/zandronum{{ doom_zandronum_release }}-linux-x86_64.tar.bz2"
