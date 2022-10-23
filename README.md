@@ -76,7 +76,7 @@ doom_install_odamex: false
 doom_install_odamex_directory: "{{ doom_main_directory }}/odamex"
 ```
 
-Set it to `true` if you want to install Zandronum. The second variable is where the executable will be installed.
+Set it to `true` if you want to install Odamex. The second variable is where the executable will be installed.
 
 Dependencies
 ------------
