@@ -1,7 +1,7 @@
 ---
 # defaults file for ch0ww-doomservers
 doom_user: "doomuser"
-doom_main_directory: /home/{{ doom_install_user }}/doom
+doom_main_directory: /home/{{ doom_user }}/doom
 
 # WAD Directory settings
 doom_waddir_create: true

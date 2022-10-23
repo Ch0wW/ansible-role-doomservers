@@ -6,4 +6,4 @@
     path: "{{ doom_waddir }}"
     state: directory
     mode: "0750"
-    owner: "{{ doom_install_user }}"
+    owner: "{{ doom_user }}"

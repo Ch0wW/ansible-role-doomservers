@@ -10,7 +10,7 @@
     path: "{{ doom_zandronum_install_directory }}"
     state: directory
     mode: "0750"
-    owner: "{{ doom_install_user }}"
+    owner: "{{ doom_user }}"
 
 - name: "Extract Zandronum to {{ doom_zandronum_install_directory }}"
   ansible.builtin.unarchive:

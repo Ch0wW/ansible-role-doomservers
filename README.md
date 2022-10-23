@@ -24,7 +24,7 @@ doom_user: "doomuser"
 This is the user that will receive all the data for the Doom environment.
 
 ```
-doom_main_directory: /home/{{ doom_install_user }}/doom
+doom_main_directory: /home/{{ doom_user }}/doom
 ```
 
 This is the main folder that will be set-up for the Doom environment.
