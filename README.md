@@ -5,7 +5,7 @@ This role sets up an environment for Doom's multiplayer ports, such as [Zdaemon]
 
 It also creates a server template so that you can suit it to your needs.
 
-**By default, all port installations are set to false! You'll have to manually set the variables. See the examples below.**
+**By default, all port installations are set to false! You'll have to manually set the variables. See the example below.**
 
 Requirements
 ------------
@@ -81,7 +81,9 @@ Set it to `true` if you want to install Odamex. The second variable is where the
 Dependencies
 ------------
 
-None...Example Playbook
+None...
+
+Example Playbook
 ----------------
 
 This example will install *__the wads directory and zdaemon__* for user `doomuser`. Zandronum and Odamex will not be installed.
