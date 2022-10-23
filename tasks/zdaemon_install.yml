@@ -54,4 +54,11 @@
           - libc6-i386
           - libstdc++6:i386
 
-  # ToDo: Add the server template
+  # Add the server template
+- name: "Create the ZDaemon server template"
+  ansible.builtin.template:
+    src: "zdaemon_server_template.j2"
+    dest: "{{ doom_zdaemon_install_directory }}/template.sh"
+    owner: "{{ doom_user }}"
+    group: "{{ doom_user }}"
+    mode: "0700"

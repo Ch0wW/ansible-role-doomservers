@@ -1,0 +1,40 @@
+#!/bin/sh
+
+#=============
+# THIS IS A BASIC SERVER TEMPLATE FOR ZDAEMON SERVERS
+#=============
+
+# The port of the server
+PORT=10666
+
+# Set the IWAD name (case sensitive)
+IWAD="DOOM2.WAD"
+
+# Set the PWADs (optional, case sensitive)
+PWADS=""
+
+# The configuration file of the server
+CFG="zserv.cfg"
+
+# Set optional arguments
+EXTRA_ARGS=""
+
+{% if doom_waddir_create %}
+WADDIR={{ doom_waddir }}
+{% endif %}
+
+# Making sure we do not have empty "-file" parameter if no PWAD was set.
+vPWADS=""
+if [ ! -z "$PWADS" ]
+then
+    vPWADS="-file $PWADS"
+fi
+
+# Making sure we do not have empty "-cfg" parameter if no CFG was set.
+vCFG=""
+if [ ! -z "$CFG" ]
+then
+    vCFG="-cfg $CFG"
+fi
+
+./zserv -port $PORT {%+ if doom_waddir_create %} -waddir $WADDIR {% endif %} -iwad $IWAD $vPWADS $vCFG $EXTRA_ARGS
