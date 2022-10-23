@@ -15,7 +15,7 @@
 
 - name: "Create Zdaemon sub-folder"
   ansible.builtin.file:
-    path: "{{ doom_install_zdaemon_directory }}"
+    path: "{{ doom_zdaemon_install_directory }}"
     state: directory
     mode: "0750"
     owner: "{{ doom_user }}"
@@ -30,7 +30,7 @@
 - name: "Copy all files"
   ansible.builtin.copy:
     src: "{{ item.path }}"
-    dest: "{{ doom_install_zdaemon_directory }}"
+    dest: "{{ doom_zdaemon_install_directory }}"
     mode: "0750"
     owner: "{{ doom_user }}"
     remote_src: true
