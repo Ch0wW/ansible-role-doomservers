@@ -1,4 +1,4 @@
-Role Name
+ansible-role-doomservers
 =========
 
 This role sets up an environment for Doom's multiplayer ports, such as [Zdaemon](https://zdaemon.org), [Zandronum](https://zandronum.com), and [Odamex](https://odamex.net) in a Linux environment. 
@@ -81,14 +81,12 @@ ansible-galaxy collection install community.general
 Example Playbook
 ----------------
 
-**THIS IS NOT DONE YET...** So expect the default data created...
-
 This example will install *the wads directory and zdaemon*. Zandronum and Odamex will not be installed.
 
 ```
     - hosts: servers
       roles:
-         - role: ch0ww.doomservers
+         - ch0ww.doomservers
 
       vars:
         - doom_waddir_create: true
